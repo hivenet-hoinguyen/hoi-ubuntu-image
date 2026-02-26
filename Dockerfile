@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-lc"]
 # -----------------------------
 # Base + popular CLI tools
 # -----------------------------
-RUN echo "=== [1/5] Installing base CLI tools ===" && \
+RUN echo "=== [1/3] Installing base CLI tools ===" && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
       nano \
@@ -31,7 +31,7 @@ RUN echo "=== [1/5] Installing base CLI tools ===" && \
 # -----------------------------
 # Node.js (LTS) + npm
 # -----------------------------
-RUN echo "=== [2/5] Installing Node.js (LTS) + npm ===" && \
+RUN echo "=== [2/3] Installing Node.js (LTS) + npm ===" && \
     apt-get update && \
     curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get install -y --no-install-recommends nodejs && \
@@ -42,20 +42,11 @@ RUN echo "=== [2/5] Installing Node.js (LTS) + npm ===" && \
 # -----------------------------
 # Build tools (for npm native deps)
 # -----------------------------
-RUN echo "=== [3/5] Installing build tools ===" && \
+RUN echo "=== [3/3] Installing build tools ===" && \
     apt-get update && \
     apt-get install -y --no-install-recommends build-essential make && \
     gcc --version | head -n 1 && \
     make --version | head -n 1 && \
-    rm -rf /var/lib/apt/lists/*
-
-# -----------------------------
-# Docker CLI
-# -----------------------------
-RUN echo "=== [4/5] Installing Docker CLI ===" && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends docker.io && \
-    echo "Docker: $(docker --version)" && \
     rm -rf /var/lib/apt/lists/*
 
 # -----------------------------
@@ -67,7 +58,6 @@ RUN echo "=== [5/5] Installation Summary ===" && \
     echo "git:    $(git --version 2>/dev/null || echo 'already present')" && \
     echo "node:   $(node -v)" && \
     echo "npm:    $(npm -v)" && \
-    echo "docker: $(docker --version)" && \
     echo "nano:   $(nano --version | head -n 1)"
 
-CMD ["sleep", "900"]
+CMD ["sleep", "3600"]
